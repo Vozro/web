@@ -12,6 +12,12 @@
         };
 
         function importSuccess(folders, sites, folderRelationships) {
+            if (!folders.length && !sites.length) {
+                $uibModalInstance.dismiss('cancel');
+                toastr.error('Nothing was imported.');
+                return;
+            }
+
             apiService.ciphers.import({
                 folders: cipherService.encryptFolders(folders, cryptoService.getKey()),
                 sites: cipherService.encryptSites(sites, cryptoService.getKey()),
@@ -19,15 +25,21 @@
             }, function () {
                 $uibModalInstance.dismiss('cancel');
                 $state.go('backend.vault').then(function () {
-                    $analytics.eventTrack('Imported Data', { label: model.source });
+                    $analytics.eventTrack('Imported Data', { label: $scope.model.source });
                     toastr.success('Data has been successfully imported into your vault.', 'Import Success');
                 });
             }, importError);
         }
 
-        function importError() {
+        function importError(errorMessage) {
+            $analytics.eventTrack('Import Data Failed', { label: $scope.model.source });
             $uibModalInstance.dismiss('cancel');
-            toastr.error('Something went wrong. Try again.', 'Oh No!');
+            if (errorMessage) {
+                toastr.error(errorMessage);
+            }
+            else {
+                toastr.error('Something went wrong. Try again.', 'Oh No!');
+            }
         }
 
         $scope.close = function () {
