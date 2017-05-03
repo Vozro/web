@@ -7,11 +7,9 @@
         $scope.save = function (model, form) {
             var error = false;
 
-            if ($scope.model.newMasterPassword.length < 8 || !/[a-z]/i.test($scope.model.newMasterPassword) ||
-                /^[a-zA-Z]*$/.test($scope.model.newMasterPassword)) {
+            if ($scope.model.newMasterPassword.length < 8) {
                 validationService.addError(form, 'NewMasterPasswordHash',
-                    'Master password must be at least 8 characters long and contain at least 1 letter and 1 number ' +
-                    'or special character.', true);
+                    'Master password must be at least 8 characters long.', true);
                 error = true;
             }
             if ($scope.model.newMasterPassword !== $scope.model.confirmNewMasterPassword) {
@@ -27,7 +25,7 @@
             $scope.processing = true;
 
             var profile = authService.getUserProfile();
-            var newKey = cryptoService.makeKey(model.newMasterPassword, profile.email);
+            var newKey = cryptoService.makeKey(model.newMasterPassword, profile.email.toLowerCase());
 
             var reencryptedSites = [];
             var sitesPromise = apiService.sites.list({ dirty: false }, function (encryptedSites) {

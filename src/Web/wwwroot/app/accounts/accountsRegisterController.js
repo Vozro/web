@@ -13,11 +13,8 @@ angular
         $scope.register = function (form) {
             var error = false;
 
-            if ($scope.model.masterPassword.length < 8 || !/[a-z]/i.test($scope.model.masterPassword) ||
-                /^[a-zA-Z]*$/.test($scope.model.masterPassword)) {
-                validationService.addError(form, 'MasterPassword',
-                    'Master password must be at least 8 characters long and contain at least 1 letter and 1 number ' +
-                    'or special character.', true);
+            if ($scope.model.masterPassword.length < 8) {
+                validationService.addError(form, 'MasterPassword', 'Master password must be at least 8 characters long.', true);
                 error = true;
             }
             if ($scope.model.masterPassword !== $scope.model.confirmMasterPassword) {
@@ -29,10 +26,11 @@ angular
                 return;
             }
 
-            var key = cryptoService.makeKey($scope.model.masterPassword, $scope.model.email);
+            var email = $scope.model.email.toLowerCase();
+            var key = cryptoService.makeKey($scope.model.masterPassword, email);
             var request = {
                 name: $scope.model.name,
-                email: $scope.model.email,
+                email: email,
                 masterPasswordHash: cryptoService.hashPassword($scope.model.masterPassword, key),
                 masterPasswordHint: $scope.model.masterPasswordHint
             };
