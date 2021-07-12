@@ -1,0 +1,178 @@
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome.scss";
+@import "~angular2-toaster/toaster";
+@import "~sweetalert2/src/sweetalert2.scss";
+
+.toast-container {
+    &.toast-top-right {
+        top: 76px;
+    }
+
+    .toast-close-button {
+        margin-right: 4px;
+        font-size: 18px;
+    }
+
+    .toast {
+        opacity: 1 !important;
+        background-image: none !important;
+        border-radius: $border-radius;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        }
+
+        &:before {
+            font-family: FontAwesome;
+            font-size: 25px;
+            line-height: 20px;
+            float: left;
+            color: #ffffff;
+            margin: auto 0 auto 15px;
+        }
+
+        .toast-content {
+            padding: 15px;
+        }
+
+        .toaster-icon {
+            display: none;
+        }
+
+        .toast-message {
+            p {
+                margin-bottom: 0.5rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        &.toast-danger, &.toast-error {
+            background-image: none !important;
+            background-color: $danger;
+
+            &:before {
+                content: "\f0e7";
+            }
+        }
+
+        &.toast-warning {
+            background-image: none !important;
+            background-color: $warning;
+
+            &:before {
+                content: "\f071";
+            }
+        }
+
+        &.toast-info {
+            background-image: none !important;
+            background-color: $info;
+
+            &:before {
+                content: "\f05a";
+            }
+        }
+
+        &.toast-success {
+            background-image: none !important;
+            background-color: $success;
+
+            &:before {
+                content: "\f00C";
+            }
+        }
+    }
+}
+
+// SweetAlert2
+
+.swal2-container {
+    background-color: rgba(0,0,0,.3);
+}
+
+.swal2-popup {
+    padding: 15px 0 0;
+    background-color: $modal-content-bg;
+    color: $body-color;
+    border: $modal-content-border-width solid #9a9a9a;
+    @include border-radius($modal-content-border-radius);
+    width: 34em; // slightly bigger than the hardcoded 478px in v1.
+
+    .swal2-header {
+        padding: 0 15px;
+    }
+
+    .swal2-icon {
+        margin: 0 auto;
+        width: auto;
+        height: auto;
+        border: none;
+    }
+
+    .swal2-content {
+        padding-bottom: 15px;
+        font-size: $font-size-base;
+        border-bottom: $modal-footer-border-width solid $modal-footer-border-color;
+    }
+
+    i.swal-custom-icon {
+        display: block;
+        margin: 0 auto;
+        font-size: 35px;
+    }
+
+    .swal2-title {
+        padding: 10px 0 15px;
+        margin: 0;
+        font-size: $font-size-lg;
+        color: $body-color;
+    }
+
+    .swal2-content {
+        font-size: $font-size-base;
+        color: $body-color;
+        padding: 0 15px 15px;
+    }
+
+    .swal2-actions {
+        padding: 15px;
+        margin: 0;
+        background-color: $input-bg;
+        @include border-radius($modal-content-border-radius);
+        display: flex; 
+        flex-direction: row;
+        justify-content: flex-start;
+        font-size: $font-size-base;
+
+        button {
+            margin-right: 10px;
+            @extend .btn;
+
+            &.swal2-confirm {
+                @extend .btn-primary;
+                font-weight: bold;
+            }
+
+            &.swal2-cancel {
+                @extend .btn-outline-secondary;
+                background-color: #ffffff;
+            }
+        }
+    }
+
+    .swal2-validation-message {
+        margin: 0 -15px;
+    }
+}
+
+date-input-polyfill {
+    &[data-open="true"] {
+        z-index: 10000 !important;
+    }
+}
